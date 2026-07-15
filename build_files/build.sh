@@ -1,6 +1,12 @@
 #!/bin/bash
 set -ouex pipefail
 
+### Helper centralizzato per download con retry
+# Uso: fetch <url> <output_file>
+fetch() {
+    curl --retry 5 --retry-delay 5 --retry-all-errors --connect-timeout 10 -fsSL "$1" -o "$2"
+}
+
 # Copy the contents of system_files/ of the git repo to /
 cp -avf "/ctx/system_files"/. /
 
@@ -12,8 +18,8 @@ dnf5 -y remove gnome-shell
 dnf5 -y install niri pipewire xdg-desktop-portal-wlr lxpolkit
 
 ## DMS (Dank Material Shell) - barra, launcher, notifiche, centro controllo
-curl --output-dir "/etc/yum.repos.d/" \
-  --remote-name "https://copr.fedorainfracloud.org/coprs/avengemedia/dms/repo/fedora-$(rpm -E %fedora)/avengemedia-dms-fedora-$(rpm -E %fedora).repo"
+fetch "https://copr.fedorainfracloud.org/coprs/avengemedia/dms/repo/fedora-$(rpm -E %fedora)/avengemedia-dms-fedora-$(rpm -E %fedora).repo" \
+      "/etc/yum.repos.d/dms.repo"
 dnf5 -y install quickshell dms greetd dms-greeter --allowerasing
 
 ## Login manager (greetd, qualsiasi va bene)
@@ -29,7 +35,6 @@ rm -f /etc/systemd/system/display-manager.service
 ln -s /usr/lib/systemd/system/greetd.service /etc/systemd/system/display-manager.service
 systemctl enable --force greetd.service
 
-# Avvia dms automaticamente per ogni nuovo utente
 mkdir -p /etc/skel/.config/systemd/user/graphical-session.target.wants
 ln -s /usr/lib/systemd/user/dms.service /etc/skel/.config/systemd/user/graphical-session.target.wants/
 
@@ -46,19 +51,19 @@ dnf5 -y install \
   file-roller \
   network-manager-applet
 
-## Browser: Brave (repo ufficiale)
-# curl -fsSL https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo \
-#   -o /etc/yum.repos.d/brave-browser.repo
+# ## Browser: Brave (repo ufficiale)
+# fetch "https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo" \
+#       "/etc/yum.repos.d/brave-browser.repo"
 # dnf5 -y install brave-browser
 
-## Browser: Helium (via repo Terra, community)
-curl -fsSL https://terra.fyralabs.com/terra.repo -o /etc/yum.repos.d/terra.repo
-dnf5 -y install helium-browser-bin
+# ## Browser: Helium (via repo Terra, community)
+# fetch "https://terra.fyralabs.com/terra.repo" "/etc/yum.repos.d/terra.repo"
+# dnf5 -y install helium-browser-bin
 
-## Antigravity (Google) - nessun RPM ufficiale per la 2.0, si estrae il tarball
+# ## Antigravity (Google) - nessun RPM ufficiale per la 2.0, si estrae il tarball
 # ANTIGRAVITY_URL="https://storage.googleapis.com/antigravity-public/antigravity-hub/2.1.4-6481382726303744/linux-x64/Antigravity.tar.gz"
 # mkdir -p /opt/antigravity
-# curl -fsSL "$ANTIGRAVITY_URL" | tar -xz -C /opt/antigravity --strip-components=1
+# curl --retry 5 --retry-delay 5 --retry-all-errors -fsSL "$ANTIGRAVITY_URL" | tar -xz -C /opt/antigravity --strip-components=1
 # ln -sf /opt/antigravity/antigravity /usr/local/bin/antigravity
 # cat > /usr/share/applications/antigravity.desktop << EOF
 # [Desktop Entry]
