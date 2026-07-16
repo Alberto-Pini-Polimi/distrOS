@@ -10,8 +10,8 @@ fetch() {
 # Copy the contents of system_files/ of the git repo to /
 cp -avf "/ctx/system_files"/. /
 
-## Disabilito repo terra-mesa già presente in Bazzite (bug GPG key mancante)
-dnf5 config-manager setopt terra-mesa.enabled=0 2>/dev/null || true
+## Disabilito repo terra-mesa (bug GPG key mancante nell'immagine base)
+find /etc/yum.repos.d/ -iname "*terra*mesa*" -exec sed -i 's/^enabled\s*=\s*1/enabled=0/' {} \;
 
 ## DNF5 speedup
 sed -i '/^\[main\]/a max_parallel_downloads=10' /etc/dnf/dnf.conf
@@ -52,7 +52,8 @@ dnf5 -y install \
   gnome-system-monitor \
   seahorse \
   file-roller \
-  network-manager-applet
+  network-manager-applet \
+  code
 
 # ## Browser: Brave (repo ufficiale)
 # fetch "https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo" \
