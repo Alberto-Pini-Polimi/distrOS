@@ -10,6 +10,9 @@ fetch() {
 # Copy the contents of system_files/ of the git repo to /
 cp -avf "/ctx/system_files"/. /
 
+## Disabilito repo terra-mesa già presente in Bazzite (bug GPG key mancante)
+dnf5 config-manager setopt terra-mesa.enabled=0 2>/dev/null || true
+
 ## DNF5 speedup
 sed -i '/^\[main\]/a max_parallel_downloads=10' /etc/dnf/dnf.conf
 
