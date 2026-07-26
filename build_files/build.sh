@@ -44,16 +44,17 @@ ln -s /usr/lib/systemd/user/dms.service /etc/skel/.config/systemd/user/graphical
 ## App utente
 dnf5 -y install \
   showtime \
-  gnome-music \
   gnome-text-editor \
   nautilus \
   gnome-calculator \
   loupe \
-  gnome-system-monitor \
   seahorse \
   file-roller \
   network-manager-applet \
-  uv
+  uv \
+  simple-scan \
+  snapshot \
+  papers
 
 ## Browser: Brave (repo ufficiale)
 fetch "https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo" \
@@ -98,6 +99,15 @@ dnf5 -y remove waybar --noautoremove
 ## rimuovere firefox
 dnf5 -y remove firefox firefox-langpacks
 dnf5 -y remove gnome-control-center
+dnf5 -y remove alacritty
+dnf5 -y remove fuzzel --noautoremove
+dnf5 -y remove htop nvtop
+dnf5 -y remove rygel
+
+## abilito il search esteso al posto di fuzzel:
+mkdir -p /etc/skel/.config/systemd/user/graphical-session.target.wants
+ln -sf /usr/lib/systemd/user/dsearch.service /etc/skel/.config/systemd/user/graphical-session.target.wants/
+
 
 ## Podman socket abilitato
 systemctl enable podman.socket
