@@ -78,6 +78,9 @@ dnf5 -y install helium-browser-bin
 # Categories=Development;
 # EOF
 
+## Rimuovo waybar (arriva come dipendenza, in conflitto visivo con DMS)
+dnf5 -y remove waybar --noautoremove
+
 ## Podman socket abilitato
 systemctl enable podman.socket
 
