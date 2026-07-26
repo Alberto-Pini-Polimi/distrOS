@@ -60,9 +60,9 @@ dnf5 -y install \
 #       "/etc/yum.repos.d/brave-browser.repo"
 # dnf5 -y install brave-browser
 
-# ## Browser: Helium (via repo Terra, community)
-# fetch "https://terra.fyralabs.com/terra.repo" "/etc/yum.repos.d/terra.repo"
-# dnf5 -y install helium-browser-bin
+## Browser: Helium (via repo Terra, community)
+fetch "https://terra.fyralabs.com/terra.repo" "/etc/yum.repos.d/terra.repo"
+dnf5 -y install helium-browser-bin
 
 # ## Antigravity (Google) - nessun RPM ufficiale per la 2.0, si estrae il tarball
 # ANTIGRAVITY_URL="https://storage.googleapis.com/antigravity-public/antigravity-hub/2.1.4-6481382726303744/linux-x64/Antigravity.tar.gz"
