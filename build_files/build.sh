@@ -10,9 +10,6 @@ fetch() {
 # Copy the contents of system_files/ of the git repo to /
 cp -avf "/ctx/system_files"/. /
 
-## Disabilito repo terra-mesa (bug GPG key mancante nell'immagine base)
-find /etc/yum.repos.d/ -iname "*terra*mesa*" -exec sed -i 's/^enabled\s*=\s*1/enabled=0/' {} \;
-
 ## DNF5 speedup
 sed -i '/^\[main\]/a max_parallel_downloads=10' /etc/dnf/dnf.conf
 
@@ -73,12 +70,9 @@ gpgkey=https://packages.microsoft.com/keys/microsoft.asc
 EOF
 dnf5 -y install code
 
-# ## Browser: Helium (via repo Terra, community) - non bloccante se Terra è giù
-# if fetch "https://terra.fyralabs.com/terra.repo" "/etc/yum.repos.d/terra.repo"; then
-#     dnf5 -y install helium-browser-bin
-# else
-#     echo "ATTENZIONE: Terra non raggiungibile, salto installazione Helium"
-# fi
+## Browser: Helium (COPR ufficiale del progetto)
+dnf5 -y copr enable imput/helium
+dnf5 -y install helium-bin
 
 # ## Antigravity (Google) - nessun RPM ufficiale per la 2.0, si estrae il tarball
 # ANTIGRAVITY_URL="https://storage.googleapis.com/antigravity-public/antigravity-hub/2.1.4-6481382726303744/linux-x64/Antigravity.tar.gz"

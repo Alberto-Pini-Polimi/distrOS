@@ -275,7 +275,7 @@ layout {
 
 hotkey-overlay {
     // Uncomment this line to disable the "Important Hotkeys" pop-up at startup.
-    // skip-at-startup
+    skip-at-startup
 }
 
 // Uncomment this line to ask the clients to omit their client-side decorations if possible.
@@ -362,7 +362,7 @@ binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
 
     // Suggested binds for running programs: terminal, app launcher, screen locker.
-    Mod+T hotkey-overlay-title="Open a Terminal" { spawn "kitty"; }
+    Mod+T hotkey-overlay-title="Open a Terminal" { spawn "ptyxis"; }
     Mod+D hotkey-overlay-title="Run an Application: DMS Spotlight" { spawn "dms" "ipc" "call" "spotlight" "toggle"; }
     Super+Alt+L hotkey-overlay-title="Lock the Screen" { spawn "dms" "ipc" "call" "lock" "toggle"; }
 
