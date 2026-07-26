@@ -52,7 +52,8 @@ dnf5 -y install \
   gnome-system-monitor \
   seahorse \
   file-roller \
-  network-manager-applet
+  network-manager-applet \
+  uv
 
 # ## Browser: Brave (repo ufficiale)
 # fetch "https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo" \
