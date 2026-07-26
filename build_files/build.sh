@@ -60,12 +60,24 @@ fetch "https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo" \
       "/etc/yum.repos.d/brave-browser.repo"
 dnf5 -y install brave-browser
 
-## Browser: Helium (via repo Terra, community) - non bloccante se Terra è giù
-if fetch "https://terra.fyralabs.com/terra.repo" "/etc/yum.repos.d/terra.repo"; then
-    dnf5 -y install helium-browser-bin
-else
-    echo "ATTENZIONE: Terra non raggiungibile, salto installazione Helium"
-fi
+## VS Code (repo ufficiale Microsoft)
+rpm --import https://packages.microsoft.com/keys/microsoft.asc
+cat > /etc/yum.repos.d/vscode.repo << EOF
+[code]
+name=Visual Studio Code
+baseurl=https://packages.microsoft.com/yumrepos/vscode
+enabled=1
+gpgcheck=1
+gpgkey=https://packages.microsoft.com/keys/microsoft.asc
+EOF
+dnf5 -y install code
+
+# ## Browser: Helium (via repo Terra, community) - non bloccante se Terra è giù
+# if fetch "https://terra.fyralabs.com/terra.repo" "/etc/yum.repos.d/terra.repo"; then
+#     dnf5 -y install helium-browser-bin
+# else
+#     echo "ATTENZIONE: Terra non raggiungibile, salto installazione Helium"
+# fi
 
 # ## Antigravity (Google) - nessun RPM ufficiale per la 2.0, si estrae il tarball
 # ANTIGRAVITY_URL="https://storage.googleapis.com/antigravity-public/antigravity-hub/2.1.4-6481382726303744/linux-x64/Antigravity.tar.gz"
@@ -83,6 +95,9 @@ fi
 
 ## Rimuovo waybar (arriva come dipendenza, in conflitto visivo con DMS)
 dnf5 -y remove waybar --noautoremove
+## rimuovere firefox
+dnf5 -y remove firefox firefox-langpacks
+dnf5 -y remove gnome-control-center
 
 ## Podman socket abilitato
 systemctl enable podman.socket
