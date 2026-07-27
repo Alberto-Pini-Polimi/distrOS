@@ -51,7 +51,7 @@ dnf5 -y install \
   uv \
   simple-scan \
   snapshot \
-  papers \ 
+  papers \
   blender
 
 ## Browser: Brave (repo ufficiale)
