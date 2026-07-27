@@ -363,12 +363,17 @@ binds {
 
     // Suggested binds for running programs: terminal, app launcher, screen locker.
     Mod+T hotkey-overlay-title="Open a Terminal" { spawn "ptyxis"; }
-    Mod+D hotkey-overlay-title="Run an Application: DMS Spotlight" { spawn "dms" "ipc" "call" "spotlight" "toggle"; }
+    Mod+space hotkey-overlay-title="Run an Application: DMS Spotlight" { spawn "dms" "ipc" "call" "spotlight" "toggle"; }
     Super+Alt+L hotkey-overlay-title="Lock the Screen" { spawn "dms" "ipc" "call" "lock" "toggle"; }
 
     // Altri
     Mod+N hotkey-overlay-title="Notifications" { spawn "dms" "ipc" "call" "notifications" "toggle"; }
     Mod+Ctrl+V hotkey-overlay-title="Clipboard History" { spawn "dms" "ipc" "call" "clipboard" "toggle"; }
+
+    // per aprire il browser di default
+    Mod+B hotkey-overlay-title="Open Default Browser" { spawn-sh "xdg-open https://"; }
+    // per aprire il file system
+    Mod+E hotkey-overlay-title="Open File Manager: Nautilus" { spawn "nautilus"; }
 
     // Use spawn-sh to run a shell command. Do this if you need pipes, multiple commands, etc.
     // Note: the entire command goes as a single argument. It's passed verbatim to `sh -c`.
