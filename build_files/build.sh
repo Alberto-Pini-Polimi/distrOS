@@ -51,7 +51,8 @@ dnf5 -y install \
   uv \
   simple-scan \
   snapshot \
-  papers
+  papers \ 
+  blender
 
 ## Browser: Brave (repo ufficiale)
 fetch "https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo" \
