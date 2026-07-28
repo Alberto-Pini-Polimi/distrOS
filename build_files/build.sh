@@ -51,8 +51,7 @@ dnf5 -y install \
   uv \
   simple-scan \
   snapshot \
-  papers \
-  blender
+  papers
 
 ## Browser: Brave (repo ufficiale)
 fetch "https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo" \
@@ -71,9 +70,9 @@ gpgkey=https://packages.microsoft.com/keys/microsoft.asc
 EOF
 dnf5 -y install code
 
-## Browser: Helium (COPR ufficiale del progetto)
-dnf5 -y copr enable imput/helium
-dnf5 -y install helium-bin
+# ## Browser: Helium (COPR ufficiale del progetto)
+# dnf5 -y copr enable imput/helium
+# dnf5 -y install helium-bin
 
 # ## Antigravity (Google) - nessun RPM ufficiale per la 2.0, si estrae il tarball
 # ANTIGRAVITY_URL="https://storage.googleapis.com/antigravity-public/antigravity-hub/2.1.4-6481382726303744/linux-x64/Antigravity.tar.gz"
